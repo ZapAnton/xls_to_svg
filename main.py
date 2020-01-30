@@ -1,36 +1,34 @@
 import xlrd
-from xlrd.sheet import Sheet
+from dataclasses import dataclass
+from xlrd.sheet import Sheet, Cell
+from xlrd.book import Book
+from typing import List, Dict
 import numpy as np
 import matplotlib.pyplot as plt
 
-category_names = [
-    'Primary',
-    'Secondary',
-    'Future Plans',
-    'No Plans'
-]
 
-results = {
-    'Executives': [64,   27,  5,   4],
-    'Middle Managers': [38  ,42  ,13  ,7],
-    'Line Managers': [39    ,36  ,12  ,13],
-    'Individual Contributors and Professionals': [33,    42  ,13  ,12],
-    'Customers': [31    ,18  ,19  ,32],
-    'Partners/Affiliates': [11  ,24  ,27  ,37],
-    'Suppliers': [5.5   ,13  ,20.5    ,61]
-}
+DEFAULT_FILE_NAME = 'data.xls'
 
-'''
-workbook = xlrd.open_workbook('test.xls')
-print(workbook.sheet_names())
-sheet: Sheet = workbook.sheet_by_index(0)
-'''
+@dataclass
+class ExcelData:
+    categories: List[str]
+    data: Dict[str, List[float]]
+
+
+    @classmethod
+    def from_xls(cls, workbook: Book):
+        sheet: Sheet = workbook.sheet_by_index(0)
+        categories: List[str] = [cell.value for cell in sheet.row(0)][1:]
+        data: Dict[str, List[float]] = {
+            sheet.row(row_num)[0].value: [cell.value for cell in sheet.row(row_num)[1:]]
+            for row_num in range(1, sheet.nrows)
+        }
+        return cls(categories, data)
 
 def plot_svg(results, category_names):
     plt.clf()
     labels = list(results.keys())
     data = np.array(list(results.values()))
-    print(data)
     data_cum = data.cumsum(axis=1)
     category_colors = plt.get_cmap('RdYlGn')(
         np.linspace(0.15, 0.85, data.shape[1]))
@@ -57,4 +55,7 @@ def plot_svg(results, category_names):
 
     plt.savefig('test.svg')
 
-plot_svg(results, category_names)
+
+workbook = xlrd.open_workbook(DEFAULT_FILE_NAME)
+excel_data = ExcelData.from_xls(workbook)
+plot_svg(excel_data.data, excel_data.categories)
