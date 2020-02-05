@@ -1,4 +1,5 @@
 import argparse
+from typing import List
 
 
 def parse_cli_arguments() -> argparse.Namespace:
@@ -14,10 +15,19 @@ def parse_cli_arguments() -> argparse.Namespace:
                         action='store',
                         dest='chosen_chart_type',
                         help='sets output chart type')
-    parser.add_argument(
-        'xls_filepath',
-        action='store',
-        help='path to the input XLS file',
-    )
+    parser.add_argument('xls_filepath',
+                        action='store',
+                        help='path to the input XLS file',
+                        nargs='?')
     arguments = parser.parse_args()
     return arguments
+
+
+def handle_arguments(arguments: argparse.Namespace):
+    if arguments.show_chart_types:
+        chart_types: List[str] = [
+            'bar_chart', 'stacked_bar_chart', 'pie_chart', 'donut_chart'
+        ]
+        output: str = '\n'.join(chart_types)
+        print(output)
+        return

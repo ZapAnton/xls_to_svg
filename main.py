@@ -5,7 +5,7 @@ from xlrd.book import Book
 from typing import List, Dict
 import numpy as np
 import matplotlib.pyplot as plt
-from cli import parse_cli_arguments
+from cli import parse_cli_arguments, handle_arguments
 
 DEFAULT_FILE_NAME = 'data.xls'
 
@@ -70,6 +70,7 @@ def plot_svg(results, category_names):
 
 if __name__ == '__main__':
     cli_arguments = parse_cli_arguments()
+    handle_arguments(cli_arguments)
 '''
     workbook = xlrd.open_workbook(DEFAULT_FILE_NAME)
     excel_data = ExcelData.from_xls(workbook)
