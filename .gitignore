@@ -2,3 +2,4 @@ venv/
 *.pyc
 *.xls*
 *.svg
+.mypy_cache/
