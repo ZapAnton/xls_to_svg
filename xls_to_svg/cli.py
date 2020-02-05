@@ -1,5 +1,5 @@
 import argparse
-from typing import List
+from xls_to_svg.chart_plotter import ChartPlotter
 
 
 def parse_cli_arguments() -> argparse.Namespace:
@@ -24,20 +24,17 @@ def parse_cli_arguments() -> argparse.Namespace:
 
 
 def handle_arguments(arguments: argparse.Namespace):
-    chart_types: List[str] = [
-        'bar_chart', 'stacked_bar_chart', 'pie_chart', 'donut_chart'
-    ]
     if arguments.show_chart_types:
-        output: str = '\n'.join(chart_types)
+        output: str = '\n'.join(ChartPlotter.CHART_TYPES)
         print(output)
         return
-    if not arguments.chosen_chart_type in chart_types:
+    if not arguments.chosen_chart_type in ChartPlotter.CHART_TYPES:
         print(
             f'Chosen chart type "{arguments.chosen_chart_type}" does not exist. Aborting'
         )
         return
     if not arguments.xls_filepath:
-        print(
-            'No input XLS file path provided. Aborting'
-        )
+        print('No input XLS file path provided. Aborting')
         return
+    plotter = ChartPlotter(arguments.chosen_chart_type, arguments.xls_filepath)
+    plotter.plot()
