@@ -36,3 +36,8 @@ def handle_arguments(arguments: argparse.Namespace):
             f'Chosen chart type "{arguments.chosen_chart_type}" does not exist. Aborting'
         )
         return
+    if not arguments.xls_filepath:
+        print(
+            'No input XLS file path provided. Aborting'
+        )
+        return
