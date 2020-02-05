@@ -24,10 +24,15 @@ def parse_cli_arguments() -> argparse.Namespace:
 
 
 def handle_arguments(arguments: argparse.Namespace):
+    chart_types: List[str] = [
+        'bar_chart', 'stacked_bar_chart', 'pie_chart', 'donut_chart'
+    ]
     if arguments.show_chart_types:
-        chart_types: List[str] = [
-            'bar_chart', 'stacked_bar_chart', 'pie_chart', 'donut_chart'
-        ]
         output: str = '\n'.join(chart_types)
         print(output)
+        return
+    if not arguments.chosen_chart_type in chart_types:
+        print(
+            f'Chosen chart type "{arguments.chosen_chart_type}" does not exist. Aborting'
+        )
         return
