@@ -1,4 +1,5 @@
 from typing import List
+from pathlib import Path
 
 
 class ChartPlotter:
@@ -7,9 +8,9 @@ class ChartPlotter:
         'bar_chart', 'stacked_bar_chart', 'pie_chart', 'donut_chart'
     ]
 
-    def __init__(self, chart_type: str, xls_filepath: str):
+    def __init__(self, chart_type: str, xls_filepath: Path):
         self.chart_type: str = chart_type
-        self.xls_filepath: str = xls_filepath
+        self.xls_filepath: Path = xls_filepath
 
     def plot(self):
         print(self.xls_filepath)
