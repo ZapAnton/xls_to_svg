@@ -5,7 +5,7 @@ from xlrd.book import Book
 from typing import List, Dict
 import numpy as np
 import matplotlib.pyplot as plt
-from cli import parse_cli_arguments, handle_arguments
+from xls_to_svg.cli import parse_cli_arguments, handle_arguments
 
 DEFAULT_FILE_NAME = 'data.xls'
 
