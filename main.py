@@ -1,30 +1,7 @@
-import xlrd
-from dataclasses import dataclass
-from xlrd.sheet import Sheet, Cell
-from xlrd.book import Book
 from typing import List, Dict
 import numpy as np
 import matplotlib.pyplot as plt
 from xls_to_svg.cli import parse_cli_arguments, handle_arguments
-
-DEFAULT_FILE_NAME = 'data.xls'
-
-
-@dataclass
-class ExcelData:
-    categories: List[str]
-    data: Dict[str, List[float]]
-
-    @classmethod
-    def from_xls(cls, workbook: Book):
-        sheet: Sheet = workbook.sheet_by_index(0)
-        categories: List[str] = [cell.value for cell in sheet.row(0)][1:]
-        data: Dict[str, List[float]] = {
-            sheet.row(row_num)[0].value:
-            [cell.value for cell in sheet.row(row_num)[1:]]
-            for row_num in range(1, sheet.nrows)
-        }
-        return cls(categories, data)
 
 
 def plot_svg(results, category_names):
@@ -71,8 +48,3 @@ def plot_svg(results, category_names):
 if __name__ == '__main__':
     cli_arguments = parse_cli_arguments()
     handle_arguments(cli_arguments)
-'''
-    workbook = xlrd.open_workbook(DEFAULT_FILE_NAME)
-    excel_data = ExcelData.from_xls(workbook)
-    plot_svg(excel_data.data, excel_data.categories)
-'''

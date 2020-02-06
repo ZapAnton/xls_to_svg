@@ -1,5 +1,6 @@
 from typing import List
 from pathlib import Path
+from xls_to_svg.input_file_data import InputFileData
 
 
 class ChartPlotter:
@@ -13,4 +14,5 @@ class ChartPlotter:
         self.xls_filepath: Path = xls_filepath
 
     def plot(self):
-        print(self.xls_filepath)
+        input_data = InputFileData.from_file(self.xls_filepath)
+        print(input_data)
