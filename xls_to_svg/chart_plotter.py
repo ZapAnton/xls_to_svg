@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import List, Dict, Callable
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 from xls_to_svg.input_file_data import InputFileData
 
 
@@ -23,10 +24,10 @@ class ChartPlotter:
             'donut_chart': self.__plot_donut_chart,
         }
 
-    def __plot_bar_chart(self, input_data: InputFileData):
+    def __plot_bar_chart(self, input_data: InputFileData) -> Figure:
         raise NotImplementedError()
 
-    def __plot_discrete_bar_chart(self, input_data: InputFileData):
+    def __plot_discrete_bar_chart(self, input_data: InputFileData) -> Figure:
         plt.clf()
         labels = list(input_data.data.keys())
         data = np.array(list(input_data.data.values()))
@@ -65,20 +66,21 @@ class ChartPlotter:
                   bbox_to_anchor=(0, 1),
                   loc='lower left',
                   fontsize='small')
-        chart_filepath: Path = self.xls_filepath.parent / (
-            self.xls_filepath.stem + '.svg')
-        plt.savefig(chart_filepath)
+        return fig
 
-    def __plot_stacked_bar_chart(self, input_data: InputFileData):
+    def __plot_stacked_bar_chart(self, input_data: InputFileData) -> Figure:
         raise NotImplementedError()
 
-    def __plot_pie_chart(self, input_data: InputFileData):
+    def __plot_pie_chart(self, input_data: InputFileData) -> Figure:
         raise NotImplementedError()
 
-    def __plot_donut_chart(self, input_data: InputFileData):
+    def __plot_donut_chart(self, input_data: InputFileData) -> Figure:
         raise NotImplementedError()
 
     def plot(self):
         input_data = InputFileData.from_file(self.xls_filepath)
         plot_method: Callable = self.__plot_method_mapping[self.chart_type]
-        plot_method(input_data)
+        chart: Figure = plot_method(input_data)
+        chart_filepath: Path = self.xls_filepath.parent / (
+            self.xls_filepath.stem + '.svg')
+        chart.savefig(chart_filepath)
