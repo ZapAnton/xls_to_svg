@@ -1,4 +1,4 @@
-from cli import parse_cli_arguments, handle_arguments
+from xls_to_svg.cli import parse_cli_arguments, handle_arguments
 
 
 def main():

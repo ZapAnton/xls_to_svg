@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from chart_plotter import ChartPlotter
+from xls_to_svg.chart_plotter import ChartPlotter
 
 
 def parse_cli_arguments() -> argparse.Namespace:

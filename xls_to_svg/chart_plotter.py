@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List, Dict, Callable
 import numpy as np
 import matplotlib.pyplot as plt
-from input_file_data import InputFileData
+from xls_to_svg.input_file_data import InputFileData
 
 
 class ChartPlotter:
