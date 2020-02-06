@@ -57,7 +57,7 @@ class ChartPlotter:
             for y, (x, c) in enumerate(zip(xcenters, widths)):
                 ax.text(x,
                         y,
-                        str(int(c)),
+                        f'{c:g}',
                         ha='center',
                         va='center',
                         color=text_color)
