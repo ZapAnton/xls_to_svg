@@ -31,19 +31,25 @@ class ChartPlotter:
         plt.clf()
         labels = list(input_data.data.keys())
         data = np.array(list(input_data.data.values()))
-        data_cum = data.cumsum(axis=1)
+        totals = np.sum(data, axis=1)
+        data_totals = np.array(
+            [row / total * 100 for row, total in zip(data, totals)])
+        data_cum = data_totals.cumsum(axis=1)
         category_colors = plt.get_cmap('RdYlGn')(np.linspace(
             0.15, 0.85, data.shape[1]))
 
-        fig, ax = plt.subplots(figsize=(9.2, 5))
+        fig, ax = plt.subplots(figsize=(14, 5))
         ax.invert_yaxis()
+        ax.set_frame_on(False)
         ax.xaxis.set_visible(False)
-        ax.set_xlim(0, np.sum(data, axis=1).max())
+        ax.set_xlim(0, np.sum(data_totals, axis=1).max())
+        ax.tick_params(length=0)
 
         for i, (colname,
                 color) in enumerate(zip(input_data.categories,
                                         category_colors)):
-            widths = data[:, i]
+            widths_old = data[:, i]
+            widths = data_totals[:, i]
             starts = data_cum[:, i] - widths
             ax.barh(labels,
                     widths,
@@ -52,10 +58,9 @@ class ChartPlotter:
                     label=colname,
                     color=color)
             xcenters = starts + widths / 2
-
             r, g, b, _ = color
             text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
-            for y, (x, c) in enumerate(zip(xcenters, widths)):
+            for y, (x, c) in enumerate(zip(xcenters, widths_old)):
                 ax.text(x,
                         y,
                         f'{c:g}',
@@ -65,7 +70,8 @@ class ChartPlotter:
         ax.legend(ncol=len(input_data.categories),
                   bbox_to_anchor=(0, 1),
                   loc='lower left',
-                  fontsize='small')
+                  fontsize='small',
+                  frameon=False)
         return fig
 
     def __plot_stacked_bar_chart(self, input_data: InputFileData) -> Figure:
