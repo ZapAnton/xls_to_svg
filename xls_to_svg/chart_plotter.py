@@ -25,7 +25,17 @@ class ChartPlotter:
         }
 
     def __plot_bar_chart(self, input_data: InputFileData) -> Figure:
-        raise NotImplementedError()
+        plt.clf()
+        values: List[float] = input_data.rows[0].values
+        label_ticks = range(len(values))
+        fig, ax = plt.subplots(figsize=(14, 5))
+        ax.barh(label_ticks, values, align='center')
+        ax.set_yticks(label_ticks)
+        ax.set_yticklabels(input_data.categories)
+        ax.tick_params(length=0)
+        ax.set_frame_on(False)
+        ax.invert_yaxis()
+        return fig
 
     def __plot_discrete_bar_chart(self, input_data: InputFileData) -> Figure:
         plt.clf()
@@ -80,7 +90,7 @@ class ChartPlotter:
     def __plot_pie_chart(self, input_data: InputFileData) -> Figure:
         plt.clf()
         values: List[float] = input_data.rows[0].values
-        fig, ax = plt.subplots(1, figsize=(14, 5))
+        fig, ax = plt.subplots(figsize=(14, 5))
         ax.pie(values, autopct='%1.2f')
         plt.subplots_adjust(right=0.4)
         ax.axis('equal')
