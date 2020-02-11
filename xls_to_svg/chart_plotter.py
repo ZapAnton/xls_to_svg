@@ -85,7 +85,22 @@ class ChartPlotter:
         return fig
 
     def __plot_stacked_bar_chart(self, input_data: InputFileData) -> Figure:
-        raise NotImplementedError()
+        plt.clf()
+        labels: List[str] = [input_row.label for input_row in input_data.rows]
+        fig, ax = plt.subplots(figsize=(14, 5))
+        data = np.array([input_row.values for input_row in input_data.rows])
+        data_cum = data.cumsum(axis=1)
+        for i, category in enumerate(input_data.categories):
+            bottom = data_cum[:, i - 1] if i != 0 else 0
+            ax.bar(labels, data[:, i], 0.4, bottom=bottom, label=category)
+        plt.subplots_adjust(right=0.7)
+        ax.legend(loc='best',
+                  bbox_to_anchor=(1, 0.5),
+                  fontsize='small',
+                  frameon=False)
+        ax.tick_params(length=0)
+        ax.set_frame_on(False)
+        return fig
 
     def __plot_pie_chart(self, input_data: InputFileData) -> Figure:
         plt.clf()
