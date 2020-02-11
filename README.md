@@ -65,3 +65,7 @@ In order for the `.xls` file to be parsed, it should conform to the following fo
 #### Discrete Bar Chart
 
 <img src="./pics/discrete_bar_chart_example.svg" align="left" />
+
+#### Pie Chart
+
+<img src="./pics/pie_chart_example.svg" align="left" />
