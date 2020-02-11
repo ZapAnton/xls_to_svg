@@ -29,8 +29,8 @@ class ChartPlotter:
 
     def __plot_discrete_bar_chart(self, input_data: InputFileData) -> Figure:
         plt.clf()
-        labels = list(input_data.data.keys())
-        data = np.array(list(input_data.data.values()))
+        labels: List[str] = [input_row.label for input_row in input_data.rows]
+        data = np.array([input_row.values for input_row in input_data.rows])
         totals = np.sum(data, axis=1)
         data_totals = np.array(
             [row / total * 100 for row, total in zip(data, totals)])
