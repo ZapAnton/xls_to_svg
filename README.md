@@ -56,7 +56,7 @@ In order for the `.xls` file to be parsed, it should conform to the following fo
 
 - [x] Discrete Bar Chart
 - [x] Pie Chart
-- [ ] Bar Chart
+- [x] Bar Chart
 - [ ] Stacked Bar Chart
 - [ ] Donut Chart
 
