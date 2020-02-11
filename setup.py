@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='xls_to_svg',
-      version='0.1.1',
+      version='0.2.0',
       description='Convert XLS tables into SVG charts',
       url='https://github.com/ZapAnton/xls_to_svg',
       author='ZapAnton',
