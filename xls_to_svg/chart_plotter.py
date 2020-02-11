@@ -78,7 +78,18 @@ class ChartPlotter:
         raise NotImplementedError()
 
     def __plot_pie_chart(self, input_data: InputFileData) -> Figure:
-        raise NotImplementedError()
+        plt.clf()
+        values: List[float] = input_data.rows[0].values
+        fig, ax = plt.subplots(1, figsize=(14, 5))
+        ax.pie(values, autopct='%1.2f')
+        plt.subplots_adjust(right=0.4)
+        ax.axis('equal')
+        ax.legend(input_data.categories,
+                  loc='best',
+                  bbox_to_anchor=(1, 0.5),
+                  fontsize='small',
+                  frameon=False)
+        return fig
 
     def __plot_donut_chart(self, input_data: InputFileData) -> Figure:
         raise NotImplementedError()
