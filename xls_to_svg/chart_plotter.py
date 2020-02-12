@@ -9,8 +9,7 @@ from xls_to_svg.input_file_data import InputFileData
 class ChartPlotter:
 
     CHART_TYPES: List[str] = [
-        'bar_chart', 'discrete_bar_chart', 'stacked_bar_chart', 'pie_chart',
-        'donut_chart'
+        'bar_chart', 'discrete_bar_chart', 'stacked_bar_chart', 'pie_chart'
     ]
 
     def __init__(self, chart_type: str, xls_filepath: Path):
@@ -21,7 +20,6 @@ class ChartPlotter:
             'discrete_bar_chart': self.__plot_discrete_bar_chart,
             'stacked_bar_chart': self.__plot_stacked_bar_chart,
             'pie_chart': self.__plot_pie_chart,
-            'donut_chart': self.__plot_donut_chart,
         }
 
     def __plot_bar_chart(self, input_data: InputFileData) -> Figure:
@@ -115,9 +113,6 @@ class ChartPlotter:
                   fontsize='small',
                   frameon=False)
         return fig
-
-    def __plot_donut_chart(self, input_data: InputFileData) -> Figure:
-        raise NotImplementedError()
 
     def plot(self):
         input_data = InputFileData.from_file(self.xls_filepath)
