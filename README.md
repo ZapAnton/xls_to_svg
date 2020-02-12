@@ -66,6 +66,10 @@ In order for the `.xls` file to be parsed, it should conform to the following fo
 
 <img src="./pics/bar_chart_example.svg" align="left" />
 
+#### Stacked Bar Chart
+
+<img src="./pics/stacked_bar_chart_example.svg" align="left" />
+
 #### Discrete Bar Chart
 
 <img src="./pics/discrete_bar_chart_example.svg" align="left" />
