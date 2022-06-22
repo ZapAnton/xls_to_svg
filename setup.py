@@ -7,7 +7,7 @@ setup(name='xls_to_svg',
       author='ZapAnton',
       python_requires='>=3.5',
       packages=find_packages(),
-      install_requires=['matplotlib==3.1.2', 'numpy==1.18.1', 'xlrd==1.2.0'],
+      install_requires=['matplotlib==3.1.2', 'numpy==1.22.0', 'xlrd==1.2.0'],
       entry_points={
           'console_scripts': [
               'xls_to_svg = xls_to_svg.__main__:main',
